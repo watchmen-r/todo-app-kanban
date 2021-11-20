@@ -50,7 +50,14 @@ const AddTaskInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-export const Header = () => {
+interface Props {
+  todo: string;
+  setTodo: React.Dispatch<React.SetStateAction<string>>;
+  handleTodo: (e: React.FormEvent) => void;
+}
+
+export const Header: React.FC<Props> = ({todo, setTodo, handleTodo}) => {
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -70,7 +77,13 @@ export const Header = () => {
             <AddTaskInputBase
               placeholder="タスクを追加"
               inputProps={{ "aria-label": "search" }}
+              onChange={(e) => setTodo(e.target.value)}
             />
+            <Button variant="contained" onClick={(e) => {
+              handleTodo(e);
+            }}>
+              登録
+            </Button>
           </AddTask>
           <Box sx={{ flexGrow: 1 }} />
         </Toolbar>
