@@ -22,10 +22,10 @@ const TodoCard = ({ index, todo, todos, setTodos }: Props) => {
     <Draggable draggableId={todo.id.toString()} index={index}>
       {(provided, snapshot) => (
         <div {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef} >
-          <Card sx={{ minWidth: 275 }}>
+          <Card sx={{ minWidth: 275, backgroundColor: "#6988A9" }} >
             <CardContent>
-              <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-                タスクが入る
+              <Typography sx={{ fontSize: 14 }} color="#ffffff" gutterBottom>
+                {todo.todo}
               </Typography>
             </CardContent>
           </Card>

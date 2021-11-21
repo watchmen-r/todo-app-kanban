@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { Header } from "./components/Header";
 import TodoBox from "./components/TodoBox";
@@ -16,6 +16,17 @@ function App() {
   const [progressTasks, setProgressTasks] = useState<Array<Todo>>([]);
   const [completedTasks, setCompletedTasks] = useState<Array<Todo>>([]);
 
+  useEffect(() => {
+    const localTodos = localStorage.getItem("localTodos");
+    const localProgress = localStorage.getItem("localProgress");
+    const localCompleted = localStorage.getItem("localCompleted");
+
+    if(localTodos !== null) setTodos(JSON.parse(localTodos));
+    if(localProgress !== null) setProgressTasks(JSON.parse(localProgress));
+    if(localCompleted !== null) setCompletedTasks(JSON.parse(localCompleted))
+
+  }, [])
+
   const handleTodo = (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -30,7 +41,7 @@ function App() {
   // ここでstateを更新する
   const onDragEnd = (result: DropResult) => {
     const { destination, source } = result;
-    // resultにdrogableで設定したdraggableIdが入っているので、
+    // resultにDroppableで設定したdrappableIdが入っているので、
     // これを用いてデータを操作する
     console.log(result);
 
@@ -49,24 +60,35 @@ function App() {
     let active = todos;
     let progress = progressTasks;
     let complete = completedTasks;
-    // Source Logic
+
+    // 移動元の配列を操作
     if (source.droppableId === "TodosList") {
       add = active[source.index];
       active.splice(source.index, 1);
+    } else if (source.droppableId === "ProgressList") {
+      add = progress[source.index];
+      progress.splice(source.index, 1);
     } else {
       add = complete[source.index];
       complete.splice(source.index, 1);
     }
 
-    // Destination Logic
-    if (destination.droppableId === "ProgressList") {
+    // 移動先の配列を操作
+    if (destination.droppableId === "TodosList") {
       active.splice(destination.index, 0, add);
+    } else if (destination.droppableId === "ProgressList") {
+      progress.splice(destination.index, 0, add);
     } else {
       complete.splice(destination.index, 0, add);
     }
 
-    setCompletedTasks(complete);
     setTodos(active);
+    setProgressTasks(progress);
+    setCompletedTasks(complete);
+
+    localStorage.setItem("localTodos", JSON.stringify(active));
+    localStorage.setItem("ProgressList", JSON.stringify(progress));
+    localStorage.setItem("localCompleted", JSON.stringify(complete));
   };
 
   return (
@@ -78,6 +100,8 @@ function App() {
           setTodos={setTodos}
           progressTasks={progressTasks}
           setProgressTasks={setProgressTasks}
+          completedTasks={completedTasks}
+          setCompletedTasks={setCompletedTasks}
         />
       </DragDropContext>
     </>

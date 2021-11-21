@@ -16,6 +16,8 @@ interface props {
   setTodos: React.Dispatch<React.SetStateAction<Array<Todo>>>;
   progressTasks: Array<Todo>;
   setProgressTasks: React.Dispatch<React.SetStateAction<Array<Todo>>>;
+  completedTasks: Array<Todo>;
+  setCompletedTasks: React.Dispatch<React.SetStateAction<Array<Todo>>>;
 }
 
 const TodoBox: React.FC<props> = ({
@@ -23,6 +25,8 @@ const TodoBox: React.FC<props> = ({
   setTodos,
   progressTasks,
   setProgressTasks,
+  completedTasks,
+  setCompletedTasks
 }) => {
   // Droppableの中は関数にして、refやスプレッド構文を下記のように追加しないといけない
   return (
@@ -43,15 +47,17 @@ const TodoBox: React.FC<props> = ({
           {(provided, snapshot) => (
             <div ref={provided.innerRef} {...provided.droppableProps}>
               <Paper elevation={3}>
-                <Typography
-                  sx={{ fontSize: 20, m: 2 }}
-                  color="text.secondary"
-                  gutterBottom
-                >
-                  未処理
-                </Typography>
+                <Box sx={{ p: 1 }}>
+                  <Typography
+                    sx={{ fontSize: 20, m: 2 }}
+                    color="text.secondary"
+                    gutterBottom
+                  >
+                    未処理
+                  </Typography>
+                </Box>
                 {todos.map((todo, index) => (
-                  <Box sx={{ m: 1 }}>
+                  <Box sx={{ p: 1 }}>
                     <TodoCard index={index} todo={todo} todos={todos} setTodos={setTodos} />
                   </Box>
                 ))}
@@ -64,15 +70,17 @@ const TodoBox: React.FC<props> = ({
           {(provided, snapshot) => (
             <div ref={provided.innerRef} {...provided.droppableProps}>
               <Paper elevation={3}>
-                <Typography
-                  sx={{ fontSize: 20, m: 2 }}
-                  color="text.secondary"
-                  gutterBottom
-                >
-                  進行中
-                </Typography>
+                <Box sx={{ p: 1 }}>
+                  <Typography
+                    sx={{ fontSize: 20, m: 2 }}
+                    color="text.secondary"
+                    gutterBottom
+                  >
+                    進行中
+                  </Typography>
+                </Box>
                 {progressTasks.map((progressTask, index) => (
-                  <Box sx={{ m: 1 }}>
+                  <Box sx={{ p: 1 }}>
                     <TodoCard index={index} todo={progressTask} todos={progressTasks} setTodos={setProgressTasks} />
                   </Box>
                 ))}
@@ -85,16 +93,18 @@ const TodoBox: React.FC<props> = ({
           {(provided, snapshot) => (
             <div ref={provided.innerRef} {...provided.droppableProps}>
               <Paper elevation={3}>
-                <Typography
-                  sx={{ fontSize: 20, m: 2 }}
-                  color="text.secondary"
-                  gutterBottom
-                >
-                  完了
-                </Typography>
-                {progressTasks.map((todo, index) => (
-                  <Box sx={{ m: 1 }}>
-                    <TodoCard index={index} todo={todo} todos={todos} setTodos={setTodos}/>
+                <Box sx={{ p: 1 }}>
+                  <Typography
+                    sx={{ fontSize: 20, m: 2 }}
+                    color="text.secondary"
+                    gutterBottom
+                  >
+                    完了
+                  </Typography>
+                </Box>
+                {completedTasks.map((completedTask, index) => (
+                  <Box sx={{ p: 1 }}>
+                    <TodoCard index={index} todo={completedTask} todos={completedTasks} setTodos={setCompletedTasks}/>
                   </Box>
                 ))}
                 {provided.placeholder}
