@@ -21,11 +21,10 @@ function App() {
     const localProgress = localStorage.getItem("localProgress");
     const localCompleted = localStorage.getItem("localCompleted");
 
-    if(localTodos !== null) setTodos(JSON.parse(localTodos));
-    if(localProgress !== null) setProgressTasks(JSON.parse(localProgress));
-    if(localCompleted !== null) setCompletedTasks(JSON.parse(localCompleted))
-
-  }, [])
+    if (localTodos !== null) setTodos(JSON.parse(localTodos));
+    if (localProgress !== null) setProgressTasks(JSON.parse(localProgress));
+    if (localCompleted !== null) setCompletedTasks(JSON.parse(localCompleted));
+  }, []);
 
   const handleTodo = (e: React.FormEvent) => {
     e.preventDefault();
@@ -36,6 +35,16 @@ function App() {
       setTodo("");
     }
   };
+
+  const handleClear = () => {
+    setTodo("");
+    setTodos([]);
+    setProgressTasks([]);
+    setCompletedTasks([]);
+    localStorage.setItem("localTodos", JSON.stringify([]));
+    localStorage.setItem("ProgressList", JSON.stringify([]));
+    localStorage.setItem("localCompleted", JSON.stringify([]));
+  }
 
   // アイテムがドロップされた時に呼び出される
   // ここでstateを更新する
@@ -91,9 +100,10 @@ function App() {
     localStorage.setItem("localCompleted", JSON.stringify(complete));
   };
 
+
   return (
     <>
-      <Header todo={todo} setTodo={setTodo} handleTodo={handleTodo} />
+      <Header todo={todo} setTodo={setTodo} handleTodo={handleTodo} handleClear={handleClear} />
       <DragDropContext onDragEnd={onDragEnd}>
         <TodoBox
           todos={todos}

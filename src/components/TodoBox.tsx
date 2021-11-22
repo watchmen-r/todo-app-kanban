@@ -49,8 +49,9 @@ const TodoBox: React.FC<props> = ({
               <Paper elevation={3}>
                 <Box sx={{ p: 1 }}>
                   <Typography
-                    sx={{ fontSize: 20, m: 2 }}
+                    sx={{ fontSize: 20, m: 2, fontWeight: 700 }}
                     color="text.secondary"
+
                     gutterBottom
                   >
                     未処理
@@ -72,7 +73,7 @@ const TodoBox: React.FC<props> = ({
               <Paper elevation={3}>
                 <Box sx={{ p: 1 }}>
                   <Typography
-                    sx={{ fontSize: 20, m: 2 }}
+                    sx={{ fontSize: 20, m: 2, fontWeight: 700 }}
                     color="text.secondary"
                     gutterBottom
                   >
@@ -95,7 +96,7 @@ const TodoBox: React.FC<props> = ({
               <Paper elevation={3}>
                 <Box sx={{ p: 1 }}>
                   <Typography
-                    sx={{ fontSize: 20, m: 2 }}
+                    sx={{ fontSize: 20, m: 2, fontWeight: 700 }}
                     color="text.secondary"
                     gutterBottom
                   >

@@ -6,9 +6,8 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import InputBase from "@mui/material/InputBase";
-import IconButton from "@mui/material/IconButton";
-import TextField from "@mui/material/TextField";
 import AddTaskIcon from "@mui/icons-material/AddTask";
+import { useState } from "react";
 
 const AddTask = styled("div")(({ theme }) => ({
   position: "relative",
@@ -18,12 +17,16 @@ const AddTask = styled("div")(({ theme }) => ({
     backgroundColor: alpha(theme.palette.common.white, 0.25),
   },
   marginRight: theme.spacing(2),
-  marginLeft: 0,
   width: "100%",
+  display: 'flex',
+  justifyContent: 'space-between',
   [theme.breakpoints.up("sm")]: {
-    marginLeft: theme.spacing(15),
     width: "auto",
   },
+  [theme.breakpoints.down("md")]: {
+    width: "100%",
+    margin: 0
+  }
 }));
 
 const AddTaskIconWrapper = styled("div")(({ theme }) => ({
@@ -45,8 +48,11 @@ const AddTaskInputBase = styled(InputBase)(({ theme }) => ({
     transition: theme.transitions.create("width"),
     width: "100%",
     [theme.breakpoints.up("md")]: {
-      width: "100ch",
+      width: "auto",
     },
+    [theme.breakpoints.down("md")]: {
+      width: "10ch",
+    }
   },
 }));
 
@@ -54,19 +60,32 @@ interface Props {
   todo: string;
   setTodo: React.Dispatch<React.SetStateAction<string>>;
   handleTodo: (e: React.FormEvent) => void;
+  handleClear: () => void;
 }
 
-export const Header: React.FC<Props> = ({todo, setTodo, handleTodo}) => {
+export const Header: React.FC<Props> = ({
+  todo,
+  setTodo,
+  handleTodo,
+  handleClear,
+}) => {
+  // 日本語を入力時、変換のためのEnterで反応しないようにするための状態管理用変数
+  const [isComposed, setIsComposed] = useState(false);
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
-        <Toolbar>
+      <AppBar position="static" sx={{ backgroundColor: "#6988A9" }}>
+        <Toolbar sx={{ display: 'flex',
+  justifyContent: 'space-between'}}>
           <Typography
             variant="h6"
             noWrap
             component="div"
-            sx={{ display: { xs: "none", sm: "block" }, ml: 10}}
+            sx={{
+              display: { xs: "none", sm: "block" },
+              ml: 10,
+              fontWeight: 700,
+            }}
           >
             かんばんアプリ
           </Typography>
@@ -75,17 +94,42 @@ export const Header: React.FC<Props> = ({todo, setTodo, handleTodo}) => {
               <AddTaskIcon />
             </AddTaskIconWrapper>
             <AddTaskInputBase
-              placeholder="タスクを追加"
+              placeholder="タスク入力"
               inputProps={{ "aria-label": "search" }}
+              value={todo}
+              onCompositionEnd={() => setIsComposed(false)}
+              onCompositionStart={() => setIsComposed(true)}
               onChange={(e) => setTodo(e.target.value)}
+              onKeyDown={(e) => {
+                if (isComposed) return;
+                if (e.key === "Enter") {
+                  handleTodo(e);
+                }
+              }}
             />
-            <Button variant="contained" onClick={(e) => {
-              handleTodo(e);
-            }}>
-              登録
-            </Button>
+            <Box>
+              <Button
+                variant="text"
+                sx={{ color: "#f1f1f1", pr: 0, pl: 0}}
+                onClick={(e) => {
+                  handleTodo(e);
+                }}
+              >
+                登録
+              </Button>
+              <Button
+                variant="text"
+                sx={{ color: "#f1f1f1", pr: 0, pl: 0 }}
+                onClick={(e) => {
+                  handleClear();
+                }}
+              >
+                クリア
+              </Button>
+            </Box>
           </AddTask>
-          <Box sx={{ flexGrow: 1 }} />
+          <Box sx={{width: 180, display: { xs: "none", sm: "block" }}}>
+          </Box>
         </Toolbar>
       </AppBar>
     </Box>
