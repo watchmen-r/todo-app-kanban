@@ -42,7 +42,7 @@ function App() {
     setProgressTasks([]);
     setCompletedTasks([]);
     localStorage.setItem("localTodos", JSON.stringify([]));
-    localStorage.setItem("ProgressList", JSON.stringify([]));
+    localStorage.setItem("localProgress", JSON.stringify([]));
     localStorage.setItem("localCompleted", JSON.stringify([]));
   }
 
@@ -96,7 +96,7 @@ function App() {
     setCompletedTasks(complete);
 
     localStorage.setItem("localTodos", JSON.stringify(active));
-    localStorage.setItem("ProgressList", JSON.stringify(progress));
+    localStorage.setItem("localProgress", JSON.stringify(progress));
     localStorage.setItem("localCompleted", JSON.stringify(complete));
   };
 
