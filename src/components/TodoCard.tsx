@@ -1,8 +1,8 @@
-import Typography from '@mui/material/Typography';
-import Card from '@mui/material/Card';
-import { Draggable } from 'react-beautiful-dnd';
-import HighlightOffIcon from '@mui/icons-material/HighlightOff';
-import { Box, IconButton } from '@mui/material';
+import Typography from "@mui/material/Typography";
+import Card from "@mui/material/Card";
+import { Draggable } from "react-beautiful-dnd";
+import HighlightOffIcon from "@mui/icons-material/HighlightOff";
+import { Box, IconButton } from "@mui/material";
 
 interface Todo {
   id: number;
@@ -22,27 +22,38 @@ const TodoCard = ({ index, todo, todos, setTodos }: Props) => {
   const handleDelete = (id: number) => {
     setTodos(todos.filter((todo) => todo.id !== id));
   };
-  
+
   // Draggableは、draggableIdはユニークなものを入れる、そして関数で囲む
   return (
     <Draggable draggableId={todo.id.toString()} index={index}>
       {(provided, snapshot) => (
-        <div {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef} >
-          <Card sx={{ minWidth: 275, backgroundColor: "#6988A9" }} >
+        <div
+          {...provided.draggableProps}
+          {...provided.dragHandleProps}
+          ref={provided.innerRef}
+        >
+          <Card sx={{ minWidth: 275, backgroundColor: "#6988A9" }}>
             <Box
               sx={{
-                display: 'flex',
-                justifyContent: 'space-between',
+                display: "flex",
+                justifyContent: "space-between",
                 p: 1,
                 m: 1,
-                backgroundColor: "#6988A9" 
+                backgroundColor: "#6988A9",
               }}
             >
-              <Typography variant="h6" component="div" sx={{mt: 0.5, color: "#f1f1f1" }}>
+              <Typography
+                variant="h6"
+                component="div"
+                sx={{ mt: 0.5, color: "#f1f1f1" }}
+              >
                 {todo.todo}
               </Typography>
-                
-              <IconButton className="icon" onClick={() => handleDelete(todo.id)}>
+
+              <IconButton
+                className="icon"
+                onClick={() => handleDelete(todo.id)}
+              >
                 <HighlightOffIcon />
               </IconButton>
             </Box>
@@ -50,7 +61,7 @@ const TodoCard = ({ index, todo, todos, setTodos }: Props) => {
         </div>
       )}
     </Draggable>
-  )
-}
+  );
+};
 
 export default TodoCard;

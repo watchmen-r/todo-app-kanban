@@ -26,7 +26,7 @@ const TodoBox: React.FC<props> = ({
   progressTasks,
   setProgressTasks,
   completedTasks,
-  setCompletedTasks
+  setCompletedTasks,
 }) => {
   // Droppableの中は関数にして、refやスプレッド構文を下記のように追加しないといけない
   return (
@@ -51,7 +51,6 @@ const TodoBox: React.FC<props> = ({
                   <Typography
                     sx={{ fontSize: 20, m: 2, fontWeight: 700 }}
                     color="text.secondary"
-
                     gutterBottom
                   >
                     未処理
@@ -59,7 +58,12 @@ const TodoBox: React.FC<props> = ({
                 </Box>
                 {todos.map((todo, index) => (
                   <Box sx={{ p: 1 }}>
-                    <TodoCard index={index} todo={todo} todos={todos} setTodos={setTodos} />
+                    <TodoCard
+                      index={index}
+                      todo={todo}
+                      todos={todos}
+                      setTodos={setTodos}
+                    />
                   </Box>
                 ))}
                 {provided.placeholder}
@@ -82,7 +86,12 @@ const TodoBox: React.FC<props> = ({
                 </Box>
                 {progressTasks.map((progressTask, index) => (
                   <Box sx={{ p: 1 }}>
-                    <TodoCard index={index} todo={progressTask} todos={progressTasks} setTodos={setProgressTasks} />
+                    <TodoCard
+                      index={index}
+                      todo={progressTask}
+                      todos={progressTasks}
+                      setTodos={setProgressTasks}
+                    />
                   </Box>
                 ))}
                 {provided.placeholder}
@@ -105,7 +114,12 @@ const TodoBox: React.FC<props> = ({
                 </Box>
                 {completedTasks.map((completedTask, index) => (
                   <Box sx={{ p: 1 }}>
-                    <TodoCard index={index} todo={completedTask} todos={completedTasks} setTodos={setCompletedTasks}/>
+                    <TodoCard
+                      index={index}
+                      todo={completedTask}
+                      todos={completedTasks}
+                      setTodos={setCompletedTasks}
+                    />
                   </Box>
                 ))}
                 {provided.placeholder}

@@ -26,12 +26,25 @@ function App() {
     if (localCompleted !== null) setCompletedTasks(JSON.parse(localCompleted));
   }, []);
 
+  useEffect(() => {
+    localStorage.setItem("localTodos", JSON.stringify(todos));
+  }, [todos])
+
+  useEffect(() => {
+    localStorage.setItem("localProgress", JSON.stringify(progressTasks));
+  }, [progressTasks])
+
+  useEffect(() => {
+    localStorage.setItem("localCompleted", JSON.stringify(completedTasks));
+  }, [completedTasks])
+
   const handleTodo = (e: React.FormEvent) => {
     e.preventDefault();
 
     if (todo) {
       // TODO IDの管理はUIDを使いたい
-      setTodos([...todos, { id: Date.now(), todo, isDone: false }]);
+      const tmpTodos = [...todos, { id: Date.now(), todo, isDone: false }];
+      setTodos(tmpTodos);
       setTodo("");
     }
   };
@@ -41,9 +54,6 @@ function App() {
     setTodos([]);
     setProgressTasks([]);
     setCompletedTasks([]);
-    localStorage.setItem("localTodos", JSON.stringify([]));
-    localStorage.setItem("localProgress", JSON.stringify([]));
-    localStorage.setItem("localCompleted", JSON.stringify([]));
   }
 
   // アイテムがドロップされた時に呼び出される
@@ -66,9 +76,9 @@ function App() {
     }
 
     let add;
-    let active = todos;
-    let progress = progressTasks;
-    let complete = completedTasks;
+    let active = [...todos];
+    let progress = [...progressTasks];
+    let complete = [...completedTasks];
 
     // 移動元の配列を操作
     if (source.droppableId === "TodosList") {
@@ -94,10 +104,6 @@ function App() {
     setTodos(active);
     setProgressTasks(progress);
     setCompletedTasks(complete);
-
-    localStorage.setItem("localTodos", JSON.stringify(active));
-    localStorage.setItem("localProgress", JSON.stringify(progress));
-    localStorage.setItem("localCompleted", JSON.stringify(complete));
   };
 
 

@@ -18,15 +18,15 @@ const AddTask = styled("div")(({ theme }) => ({
   },
   marginRight: theme.spacing(2),
   width: "100%",
-  display: 'flex',
-  justifyContent: 'space-between',
+  display: "flex",
+  justifyContent: "space-between",
   [theme.breakpoints.up("sm")]: {
     width: "auto",
   },
   [theme.breakpoints.down("md")]: {
     width: "100%",
-    margin: 0
-  }
+    margin: 0,
+  },
 }));
 
 const AddTaskIconWrapper = styled("div")(({ theme }) => ({
@@ -52,7 +52,7 @@ const AddTaskInputBase = styled(InputBase)(({ theme }) => ({
     },
     [theme.breakpoints.down("md")]: {
       width: "10ch",
-    }
+    },
   },
 }));
 
@@ -75,8 +75,7 @@ export const Header: React.FC<Props> = ({
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static" sx={{ backgroundColor: "#6988A9" }}>
-        <Toolbar sx={{ display: 'flex',
-  justifyContent: 'space-between'}}>
+        <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
           <Typography
             variant="h6"
             noWrap
@@ -110,7 +109,7 @@ export const Header: React.FC<Props> = ({
             <Box>
               <Button
                 variant="text"
-                sx={{ color: "#f1f1f1", pr: 0, pl: 0}}
+                sx={{ color: "#f1f1f1", pr: 0, pl: 0 }}
                 onClick={(e) => {
                   handleTodo(e);
                 }}
@@ -128,8 +127,7 @@ export const Header: React.FC<Props> = ({
               </Button>
             </Box>
           </AddTask>
-          <Box sx={{width: 180, display: { xs: "none", sm: "block" }}}>
-          </Box>
+          <Box sx={{ width: 180, display: { xs: "none", sm: "block" } }}></Box>
         </Toolbar>
       </AppBar>
     </Box>
